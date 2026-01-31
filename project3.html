@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple Weather App</title>
+
+<style>
+body {
+    background-color: lightblue;
+    font-family: Arial;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.box {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 250px;
+    text-align: center;
+}
+
+input {
+    padding: 5px;
+    width: 80%;
+}
+
+button {
+    margin-top: 10px;
+    padding: 6px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>Weather App</h2>
+
+<input type="text" id="city" placeholder="Enter City">
+
+<br><br>
+
+<button onclick="showWeather()">Check Weather</button>
+
+<p id="temp"></p>
+<p id="humidity"></p>
+<p id="condition"></p>
+
+</div>
+
+<script>
+
+function showWeather() {
+
+    var cityName = document.getElementById("city").value;
+
+    var apiKey = "5a2817216ac3d4c510560f19a978577a";
+
+    var link =
+    "https://api.openweathermap.org/data/2.5/weather?q="
+    + cityName +
+    "&units=metric&appid=" +
+    apiKey;
+
+    fetch(link)
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+
+        document.getElementById("temp").innerHTML =
+        "Temperature: " + data.main.temp + " °C";
+
+        document.getElementById("humidity").innerHTML =
+        "Humidity: " + data.main.humidity + "%";
+
+        document.getElementById("condition").innerHTML =
+        "Condition: " + data.weather[0].main;
+
+    })
+    .catch(function() {
+        alert("City not found");
+    });
+
+}
+
+</script>
+
+</body>
+</html>
